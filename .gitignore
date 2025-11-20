@@ -1,0 +1,7 @@
+*.csv
+*.png
+__pycache__/
+.vscode/
+.venv/
+.ipynb__checkpoints__/
+*.pyc
