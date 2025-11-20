@@ -4,4 +4,4 @@ __pycache__/
 .vscode/
 .venv/
 .ipynb__checkpoints__/
-*.pyc
+*.pycss
