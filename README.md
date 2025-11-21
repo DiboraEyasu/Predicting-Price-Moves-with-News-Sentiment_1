@@ -72,7 +72,28 @@ January 1, 2025 and November 18, 2025. The structure of the data is:
 ### 📌 Task 3: Correlation between news and stock movement
 ##### ✅ Steps to be performed
 
-## Installation Instructions
 
+## 🛠️ Environment Setup
 
+### Prerequisites
+- Python 3.13 or higher
+- pip (Python package manager)
+- Git
 
+### Installation Instructions
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/DiboraEyasuE/stock-challenge-week1.git
+   cd TEST
+# On Windows
+python -m venv .venv
+.venv\Scripts\activate
+
+# On Mac/Linux
+python -m venv .venv
+source .venv/bin/activate
+
+    ``` pip install -r requirements.txt
+    ``` python --version
+    ``` pip list
