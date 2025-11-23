@@ -91,3 +91,39 @@ class NewsEDA:
         else:
             plt.show()
 
+    
+    def time_series_analysis(self):
+        """Helps us to visualize the times where many articles are published"""
+        self.df['date'] = pd.to_datetime(self.df['date'])
+        self.df['day'] = self.df['date'].dt.day_name()
+        self.df['hour'] = self.df['date'].dt.hour
+        self.df['month'] = self.df['date'].dt.month
+        self.df['year'] = self.df['date'].dt.year
+
+        daily_count = self.df.groupby('day').size()
+        monthly_count = self.df.groupby('month').size()
+
+        plt.figure(figsize=(8,4))
+        plt.subplot(1, 2, 1)
+        daily_count.plot
+        plt.title("Articles Published per Day")
+        plt.xticks(rotation=45)
+
+        plt.subplot(1, 2, 2)
+        monthly_count.plot
+        plt.title("Articles Published per Month")
+        plt.xticks(rotation=45)
+
+        plt.subplot(2, 2, 1)
+        self.df['hour'].value_counts().sort_index().plot(kind='bar', color='purple')
+        plt.title("Hourly News Article Publication")
+        plt.xticks(rotation=45)
+
+        plt.subplot(2, 2, 2)
+        plt.title("Yearly Publication Trends")
+        self.df['year'].plot(kind='bar', color='grey')
+        plt.xticks(rotation=45)
+
+
+        
+
