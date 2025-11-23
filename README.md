@@ -9,8 +9,7 @@ stock forecasting companies and specifically Nova Solutions at its present statu
 ## Business Objective
 
 The primary goal of this project is to enhance the predictive analytics capabilities of **Nova Financial Solutions**
-by significantly boosting its financial forecasting accuracy and operational efficiency through advanced data analysis
-on qualitative data from News and the quantitative one from stock market data sources.
+as it aims to enhance its predictive analytics capabilities to significantly boost its financial forecasting accuracy and operational efficiency through advanced data analysis. As a Data Analyst at Nova Financial Solutions,  I have tried to conduct a rigorous analysis of the financial news dataset and provide a meaningful summary and insight.
 
 ## Situational Overview
 
