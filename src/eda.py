@@ -46,3 +46,48 @@ class NewsEDA:
                 print("\nDate range:")
                 print("Min date:", self.df['date'].min())
                 print("Max date:", self.df['date'].max())
+
+    def news_description(self):
+        """Visualize headline length and frequent publishers."""
+        if self.df is None:
+            print("No data loaded. Call `load_data()` first.")
+            return
+
+        if 'headline' in self.df.columns:
+            self.df['headline_length'] = self.df['headline'].str.len()
+            print('Headline Length Status:\n')
+            print(self.df['headline_length'].describe())
+        else:
+            print("No 'headline' column found in dataframe.")
+
+        plt.figure(figsize=(10, 4))
+        plt.subplot(1, 2, 1)
+        plt.title('Headlines Length Distribution')
+        if 'headline_length' in self.df.columns:
+            self.df['headline_length'].hist(bins=50)
+        else:
+            plt.text(0.5, 0.5, 'No headline data', ha='center')
+
+        plt.subplot(1, 2, 2)
+        plt.title('Top 10 Article Publishers')
+        if 'publisher' in self.df.columns:
+            self.df['publisher'].value_counts().head(7).plot(kind='bar', color='c', edgecolor='black')
+            plt.xticks(rotation=45)
+        else:
+            plt.text(0.5, 0.5, 'No publisher data', ha='center')
+
+        plt.tight_layout()
+        # Avoid attempting to open a GUI window in headless/non-interactive environments.
+        # Use backend check: if running with a non-interactive backend (e.g., Agg), close the
+        # figure instead of calling `plt.show()` which emits a warning.
+        try:
+            import matplotlib
+            backend = matplotlib.get_backend().lower()
+        except Exception:
+            backend = ''
+
+        if backend.startswith('agg'):
+            plt.close('all')
+        else:
+            plt.show()
+
