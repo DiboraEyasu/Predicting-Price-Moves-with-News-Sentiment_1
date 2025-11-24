@@ -5,6 +5,9 @@ import os
 import matplotlib.pyplot as plt
 from datetime import datetime as dt
 from nltk.corpus import stopwords
+import re
+from collections import Counter
+from sklearn.feature_extraction.text import CountVectorizer
 
 class NewsEDA:
     def __init__(self, filepath=None):
@@ -123,7 +126,85 @@ class NewsEDA:
         plt.title("Yearly Publication Trends")
         self.df['year'].plot(kind='bar', color='grey')
         plt.xticks(rotation=45)
+        plt.tight_layout()
+        plt.show()
 
 
-        
+        # function to remove punctuation, number and convert to lower case
+    def clean_text(text):
+        text=str(text).lower() # lowercase
+        text = re.sub(r'\d+', '', text)  # remove numbers
+        text = re.sub(r'[^\w\s]', '', text)  # remove punctuation
+        return text
+    
 
+    def text_analysis(self):
+        self.df["clean_headline"] = self.df.headline.apply()
+        stop_words = set(stopwords.words('english'))
+
+        # Single word analysis
+        words = self.df['clean_headline'].str.split().explode()
+        top_words = words[~words.isin(stop_words)].value_counts().head(15)
+
+        # Multi-word phrases analysis
+        phrases = {
+            'bigrams': (2,2),
+            'trigrams': (3,3), 
+            'mixed': (2,3)
+        }
+
+        for name, ngram_range in phrases.items():
+            vectorizer = CountVectorizer(ngram_range=ngram_range, stop_words='english')
+            X = vectorizer.fit_transform(self.df['clean_headline'])
+            frequencies = X.sum(axis=0).A1
+            features = vectorizer.get_feature_names_out()
+            top_phrases = sorted(zip(features, frequencies), key=lambda x: x[1], reverse=True)[:10]
+            
+            print(f"\n🔤 Top {name.upper()}:")
+            for phrase, freq in top_phrases:
+                print(f"  {phrase:<30} {freq:>6,}")
+
+        # Financial zoom expressions
+        financial_terms = ['earnings', 'fda', 'dividend', 'merger', 'target price', 'stock split']
+        print(f"\n🎯 FINANCIAL TERM COUNTS:")
+        for term in financial_terms:
+            count = self.df['clean_headline'].str.contains(term, case=False).sum()
+            print(f"  {term:<15} {count:>6,}")
+
+
+    def publisher_analysis(self):
+        # Analyze top 3 publishers' content differences
+        top_3_publishers = self.df['publisher'].value_counts().head(3).index
+
+        print("Content Specialization by Top Publishers:")
+        for publisher in top_3_publishers:
+            publisher_df = self.df[self.df['publisher'] == publisher]
+            
+            # Get unique keywords for this publisher
+            publisher_keywords = publisher_df['headline'], top_n=8
+            
+            print(f"\n{publisher}:")
+            print(f"  • Articles: {len(publisher_df):,}")
+            print(f"  • Unique keywords: {[word for word, count in publisher_keywords]}")
+            print(f"  • Avg headline length: {publisher_df['headline_length'].mean():.1f} chars")
+
+        # Check for email domains in publisher names
+        email_publishers = df[df['publisher'].str.contains('@', na=False)]
+        if len(email_publishers) > 0:
+            print(f"\n📧 Email Publishers Found: {len(email_publishers)}")
+            email_publishers['domain'] = email_publishers['publisher'].str.split('@').str[1]
+            print("Top email domains:")
+            print(email_publishers['domain'].value_counts().head(5))
+        else:
+            print("\n📧 No email addresses found in publisher names")
+
+
+if __name__ == "__main__":
+    df = pd.read_csv('./data/raw_analyst_ratings.csv')
+
+    df.load_data()
+    df.basic_info()
+    df.clean_text()
+
+    df.time_series_analysis()
+    df.text_analysis()
