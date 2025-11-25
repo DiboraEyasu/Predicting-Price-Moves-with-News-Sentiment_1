@@ -48,14 +48,22 @@ January 1, 2025 and November 18, 2025. The structure of the data is:
     * Git version control 
     * CI/CD 
 
-##### ✅ Steps to be performed
+## Current Progress ✅
+- ✅ Data loading and validation
+- ✅ Basic EDA (headline stats, time series, publisher analysis)  
+- ✅ Technical indicators (RSI, SMA)
+- ✅ Sentiment analysis pipeline
+- ✅ Unit test coverage
 
-* Perform Exploratory Data Analysis (EDA) analysis on:
-    * Descriptive Statistics
-    * Text Analysis(Topic Modeling)
-    * Time Series Analysis
-    * Publisher A1nalysis
+## Known Limitations ⚠️
+- Mock price data for correlation analysis
+- Basic sentiment scoring (TextBlob)
+- Limited technical indicators implemented
 
+## Next Features 🚀
+- Real stock price integration
+- Advanced sentiment models
+- Additional technical indicators
 ### 📌 Task 2: Quantitative analysis using pynance and TaLib
 
 ##### ✅ Steps to be performed
