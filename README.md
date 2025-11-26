@@ -60,25 +60,44 @@ January 1, 2025 and November 18, 2025. The structure of the data is:
 - Basic sentiment scoring (TextBlob)
 - Limited technical indicators implemented
 
-## Next Features 🚀
-- Real stock price integration
-- Advanced sentiment models
-- Additional technical indicators
-### 📌 Task 2: Quantitative analysis using pynance and TaLib
+### 📌 Task 2: Quantitative Technical Analysis
+##### ✅ **Completed Steps**
 
-##### ✅ Steps to be performed
- * **Date Alignment**:
- * **Sentiment Analysis**: to quantify the tone of each article of the news headlines (positive, negative, neutral).
-  Tools to be used are Python libraries like **nltk and TextBlob**.
+**Technical Indicators Implementation**
+- ✅ Calculated Simple Moving Averages (SMA 20, SMA 50)
+- ✅ Computed Relative Strength Index (RSI) with overbought/oversold levels
+- ✅ Generated price trend visualizations
+- ✅ Created technical analysis charts
 
- * **Analysis**
-    * **Calculate Daily Stock Returns**:
-    * **Correlation Analysis**:
-        * Aggregate Sentiments
-        * Calculate Correlation
-### 📌 Task 3: Correlation between news and stock movement
-##### ✅ Steps to be performed
+**Visualization Delivered**
+- ✅ Price and Moving Averages charts (2011-2020)
+- ✅ RSI momentum indicator plots
+- ✅ Comparative technical analysis visuals
 
+### 📌 Task 3: Sentiment & Correlation Analysis
+##### ✅ **Completed Steps**
+
+**Sentiment Analysis Pipeline**
+- ✅ Implemented sentiment scoring on news  to generate daily sentiment aggregates
+- ✅ Processed 537,892 articles for sentiment classification
+
+**Correlation Analysis**
+- ✅ Aligned sentiment data with trading dates and calculated daily stock returns
+- ✅ Computed Pearson correlation coefficients for statistical significance testing
+
+**Key Results Obtained**
+- ✅ Pearson Correlation: for effective relationship analysis
+
+## Current Status 📊
+**Analysis Completed**: Basic correlation between news sentiment and stock returns
+**Key Insight**: News sentiment shows statistically significant but practically negligible impact on same-day returns
+**Recommendation**: Sentiment alone is not sufficient for trading decisions - need multi-factor approaches
+
+## Technology Used 🛠️
+- **Data Analysis**: Pandas, NumPy
+- **Technical Analysis**: Custom indicators, TA-Lib
+- **Sentiment Analysis**: Text processing libraries
+- **Visualization**: Matplotlib, statistical plots
 
 ## 🛠️ Environment Setup
 
