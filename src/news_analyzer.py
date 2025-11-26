@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 from typing import Optional, Dict, Any
+from sentiment_analyzer import SentimentAnalyzer
 
 class NewsAnalyzer:
     """
@@ -24,6 +25,8 @@ class NewsAnalyzer:
         """
         try:
             self.df = pd.read_csv(self.data_path, parse_dates=['date'])
+            # FIX: Remove timezone info immediately
+            self.df['date'] = self.df['date'].dt.tz_localize(None)
             print(f"✅ Loaded {len(self.df)} records")
             return True
         except Exception as e:
@@ -32,13 +35,9 @@ class NewsAnalyzer:
     
     
     def perform_eda(self) -> Dict[str, Any]:
-        """Perform exploratory data analysis.
-        
-        Returns:
-            Dictionary containing EDA results
-        """
+        """Perform exploratory data analysis."""
         if self.df is None:
-            raise ValueError("No data loaded. Call _load_data() first.")
+            raise ValueError("No data loaded. Call load_data() first.")
         
         results = {}
         
@@ -47,9 +46,13 @@ class NewsAnalyzer:
             self.df['headline_length'] = self.df['headline'].str.len().fillna(0)
             results['headline_stats'] = self.df['headline_length'].describe().to_dict()
         
-        # 2. Time series analysis
+        # 2. Time series analysis - FIXED VERSION
         if 'date' in self.df.columns:
-            daily_count = self.df.resample('D', on='date').size()
+            # Ensure date is datetime and set as index for resample
+            self.df['date'] = pd.to_datetime(self.df['date'])
+            temp_df = self.df.set_index('date')  # Temporary index for resampling
+            
+            daily_count = temp_df.resample('D').size()
             results['daily_articles'] = len(daily_count)
             results['date_range'] = {
                 'start': self.df['date'].min().strftime('%Y-%m-%d'),
@@ -60,8 +63,8 @@ class NewsAnalyzer:
         if 'publisher' in self.df.columns:
             results['top_publishers'] = self.df['publisher'].value_counts().head(5).to_dict()
         
-        return results 
-    # In NewsAnalyzer class
+        return results
+    
     def sentiment_correlation_pipeline(self, price_data: pd.Series) -> Dict[str, float]:
         """Run sentiment correlation analysis.
         
